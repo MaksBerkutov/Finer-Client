@@ -1,0 +1,52 @@
+.playListItem {
+  transition: background-color 0.3s;
+}
+
+.container {
+  border-radius: 150px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 15px;
+
+}
+
+.backgoundMain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+.items {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+.playListItemActive {
+  background-color: rgba(73, 73, 73, 0.5);
+  transition: background-color 0.3s;
+}
+
+.items:hover {
+  background-color: rgba(85, 85, 85, 0.1);
+}
+
+.UrlLink {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 450px;
+}

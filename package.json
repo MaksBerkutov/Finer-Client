@@ -1,0 +1,48 @@
+{
+	"name": "frontend",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@testing-library/jest-dom": "^5.17.0",
+		"@testing-library/react": "^13.4.0",
+		"@testing-library/user-event": "^13.5.0",
+		"axios": "^1.6.2",
+		"react": "^18.2.0",
+		"react-bootstrap": "^2.9.1",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.19.0",
+		"react-scripts": "5.0.1",
+		"react-transition-group": "^4.4.5",
+		"socket.io": "^4.7.2",
+		"socket.io-client": "^4.7.2",
+		"web-vitals": "^2.1.4"
+	},
+	"scripts": {
+		"start": "REACT_APP_ENV=developmen react-app-rewired start",
+		"build": "REACT_APP_ENV=production react-app-rewired build",
+		"test": "react-app-rewired test",
+		"eject": "react-app-rewired eject"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"react-app-rewire-alias": "^1.1.7",
+		"react-app-rewired": "^2.2.1"
+	}
+}

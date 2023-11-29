@@ -1,0 +1,13 @@
+.playlistContainer {
+  background-color: #2f3236;
+  color: #fff;
+  overflow-y: auto;
+  border: none;
+}
+
+.playlist {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+

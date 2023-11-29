@@ -1,0 +1,41 @@
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #2C2F33;
+	height: 100vh;
+}
+
+.item-enter {
+	transform: translateX(-350px);
+}
+
+.item-enter-active {
+	transform: translateX(0px);
+	transition: all 500ms ease-in;
+}
+
+.item-exit {
+	opacity: 1;
+}
+
+.item-exit-active {
+	transform: translateX(-350px);
+	transition: all 500ms ease-in;
+}
+
+.post-enter {
+	transform: translateX(-350px);
+}
+
+.post-enter-active {
+	transform: translateX(0px);
+	transition: all 500ms ease-in;
+}
+
+.post-exit {
+	opacity: 1;
+}
+
+.post-exit-active {
+	transform: translateX(-350px);
+	transition: all 500ms ease-in;
+}

@@ -1,0 +1,20 @@
+.container {
+  margin: 0;
+  height: 93.9vh;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+}
+
+.logo {
+  height: 45px;
+  margin-right: 20px;
+}

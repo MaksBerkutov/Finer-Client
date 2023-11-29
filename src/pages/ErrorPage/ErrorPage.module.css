@@ -1,0 +1,28 @@
+.errorPanel {
+  border: 1px solid #d9534f;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #f2dede;
+  color: #a94442;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.errorHeader {
+  text-align: center;
+}
+
+.errorBody {
+  margin-top: 10px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

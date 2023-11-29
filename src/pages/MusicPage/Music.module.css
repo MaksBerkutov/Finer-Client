@@ -1,0 +1,43 @@
+.container {
+  margin: 0;
+  height: 94.2vh;
+  width: 100vw;
+  color: white;
+  display: flex;
+}
+
+.info {
+  flex-grow: 1;
+  padding: 20px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #2f3236;
+  border-radius: 10px;
+
+}
+
+
+.audio-player {
+  width: 100%;
+  margin-bottom: 20px;
+
+}
+
+
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #23272A;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #7289DA;
+}

@@ -1,0 +1,28 @@
+.item {
+  width: 18rem;
+
+}
+
+.userItem {
+  width: 40rem;
+
+}
+
+.userItem,
+.item {
+  transition: background-color 0.3s ease;
+  background-color: #3a3d42;
+  color: white;
+  border-radius: 15px;
+}
+
+.userItem Img,
+.item Img {
+
+
+  border-radius: 15px;
+}
+
+.item:hover {
+  background-color: #ff5757;
+}
