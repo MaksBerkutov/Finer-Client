@@ -1,11 +1,12 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { unAuntification } from '@util/Auntification'
+import config from '@config/config'
 
 const CardServers = ({ server, className }) => {
 	const handlerAddBots = e => {
 		unAuntification()
-		const clientId = '1174699836294053968'
+		const clientId = config.discord_client_id
 		window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=8&scope=bot&guild_id=${server.id}`
 	}
 	return (

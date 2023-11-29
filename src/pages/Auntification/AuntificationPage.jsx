@@ -10,7 +10,7 @@ const AuntificationPage = () => {
 	const navigate = useNavigate()
 
 	const handlerlogin = () => {
-		const clientId = '1174699836294053968'
+		const clientId = config.discord_client_id
 		const redirect = `${config.clientUrl}/auntification`
 		window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirect}&response_type=code&scope=identify%20guilds`
 	}

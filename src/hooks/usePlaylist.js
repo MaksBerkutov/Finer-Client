@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const usePlaylist = (socket, idServer, idUser) => {
+export const usePlaylist = (socket, idServer, idUser, setLoading) => {
 	const [playedStatus, setStatus] = useState(true)
-	const [plalistInfo, setPlalistInfo] = useState({
-		songs: [],
-		currentPlayed: -1,
-	})
+	const [playlist, setPlaylist] = useState([])
+	const [currentPlayed, setCurrentPlayed] = useState(-1)
 	const navigate = useNavigate()
 	useEffect(() => {
+		setLoading(true)
 		const fetchData = async () => {
 			try {
 				if (idServer === -1) {
@@ -19,18 +18,20 @@ export const usePlaylist = (socket, idServer, idUser) => {
 						},
 					})
 				}
+				socket?.connect()
 
 				socket.emit(
 					'connectMe',
 					{ idServer: idServer, idUser: idUser },
-					callback => {}
+					callback => {
+						if (true) socket?.emit('getAllInfo', { id: idServer })
+					}
 				)
 
 				socket?.on('updatePlayed', status => {
 					setStatus(status)
 				})
 
-				socket?.emit('getAllInfo', { id: idServer })
 				socket?.on('updatePlaylist', ({ action, song }) => {
 					if (song === undefined) return
 
@@ -38,28 +39,16 @@ export const usePlaylist = (socket, idServer, idUser) => {
 						socket?.emit('getCurrentStatus', { id: idServer }, callback => {
 							setStatus(callback)
 						})
-						setPlalistInfo(prevInfo => ({
-							...prevInfo,
-							songs: song,
-						}))
-						console.log('set new playlist', song)
+						setPlaylist(song)
 
 						socket?.emit('getCurrentPlayed', { id: idServer }, callback => {
-							setPlalistInfo(prevInfo => ({
-								...prevInfo,
-								currentPlayed: callback,
-							}))
+							setCurrentPlayed(callback)
 						})
 					} else if (action === 'newCurrentPlayed') {
-						setPlalistInfo(prevInfo => ({
-							...prevInfo,
-							currentPlayed: song,
-						}))
+						setCurrentPlayed(song)
 					} else if (action === 'add') {
-						setPlalistInfo(prevInfo => ({
-							...prevInfo,
-							songs: [...prevInfo.songs, song],
-						}))
+						setPlaylist(prevInfo => [...prevInfo, song])
+						setLoading(false)
 					} else if (action === 'remove') {
 						const remove = songs => {
 							const updatedSongs = [...songs]
@@ -70,10 +59,8 @@ export const usePlaylist = (socket, idServer, idUser) => {
 
 							return updatedSongs
 						}
-						setPlalistInfo(prevInfo => ({
-							...prevInfo,
-							songs: remove(prevInfo.songs),
-						}))
+						setPlaylist(prevInfo => remove(prevInfo))
+						setLoading(false)
 					}
 				})
 			} catch (error) {
@@ -82,11 +69,12 @@ export const usePlaylist = (socket, idServer, idUser) => {
 		}
 
 		fetchData()
+		setLoading(false)
 		return () => {
 			socket?.off('updatePlaylist')
 			socket?.off('updatePlayed')
-			socket?.close()
+			socket?.disconnect()
 		}
 	}, [])
-	return [playedStatus, plalistInfo]
+	return [playedStatus, playlist, currentPlayed]
 }

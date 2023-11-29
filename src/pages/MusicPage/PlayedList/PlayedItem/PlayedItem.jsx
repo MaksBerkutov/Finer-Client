@@ -4,7 +4,6 @@ import YouTube from '@image/YouTube.svg'
 import SoundCloud from '@image/SoundCloud.svg'
 import Spotify from '@image/Spotify.png'
 const PlayedItem = ({ remove, play, currentPlayed, playlistItem, index }) => {
-	//Spotify
 	const logos = {
 		YouTube: YouTube,
 		SoundCloud: SoundCloud,

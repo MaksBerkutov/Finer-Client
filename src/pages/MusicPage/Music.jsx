@@ -1,5 +1,5 @@
 import classes from './Music.module.css'
-import React from 'react'
+import React, { useState } from 'react'
 import PlayedList from './PlayedList/PlayedList'
 import { Routes, useLocation } from 'react-router-dom'
 
@@ -7,25 +7,33 @@ import MusicPlayer from './MusicPlayer/MusicPlayer'
 import io from 'socket.io-client'
 import { usePlaylist } from '@hook/usePlaylist'
 import config from '@config/config'
+import Loader from '@component/Loader/Loader'
 const socket = io(config.serverSocketUrl)
 function Music() {
 	const location = useLocation()
+	const [loading, setLoading] = useState(true)
 
 	const idServer = location.state.idServer || undefined
 	const idUser = location.state.idUser || undefined
-	const [playedStatus, plalistInfo] = usePlaylist(socket, idServer, idUser)
+	const [playedStatus, playlist, currentPlayed] = usePlaylist(
+		socket,
+		idServer,
+		idUser,
+		setLoading
+	)
 
 	const play = item => {
-		console.log(item)
+		setLoading(true)
 		socket?.emit('setPlayItem', { id: idServer, item: item })
 	}
 	const remove = item => {
+		setLoading(true)
 		socket?.emit('deltetePlayItem', { id: idServer, item: item })
 	}
 	const handlerImport = obj => {
 		socket?.emit('importedPlaylist', { id: idServer, obj: obj })
 	}
-	const finded = plalistInfo.songs.find(x => x.id === plalistInfo.currentPlayed)
+	const finded = playlist.find(x => x.id === currentPlayed)
 	const text = finded === undefined ? '' : finded.title
 
 	return (
@@ -47,17 +55,18 @@ function Music() {
 					socket={socket}
 				/>
 			</div>
-			{plalistInfo.songs.length === 0 ? (
+			{playlist.length === 0 ? (
 				<h1>Нет аудио для проигрыванния</h1>
 			) : (
 				<PlayedList
 					remove={remove}
 					play={play}
 					onImport={handlerImport}
-					currentPlayed={plalistInfo.currentPlayed}
-					items={plalistInfo.songs}
+					currentPlayed={currentPlayed}
+					items={playlist}
 				/>
 			)}
+			<Loader isLoading={loading} />
 		</div>
 	)
 }

@@ -36,7 +36,6 @@ const PlayedList = ({ currentPlayed, items, remove, play, onImport }) => {
 			reader.readAsText(file)
 		}
 	}
-	console.log(items)
 	return (
 		<div className={classes.playlistContainer}>
 			<ul className={classes.playlist}>

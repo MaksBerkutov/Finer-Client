@@ -5,10 +5,10 @@ import classes from './Admin.module.css'
 import io from 'socket.io-client'
 import config from '@config/config'
 const socket = io(config.serverSocketUrl)
+
 const Admin = () => {
 	const [AllChats, setAllChats] = useState(null)
-	const location = useLocation()
-
+	const location = useLocation({})
 	const idServer = location.state.idServer || undefined
 	const idUser = location.state.idUser || undefined
 	const navigate = useNavigate()
@@ -24,7 +24,7 @@ const Admin = () => {
 						},
 					})
 				}
-
+				socket?.connect()
 				socket?.emit(
 					'connectMe',
 					{ idServer: idServer, idUser: idUser },
@@ -44,10 +44,17 @@ const Admin = () => {
 		}
 
 		fetchData()
-		return () => {}
+		return () => {
+			socket?.off('connectMe')
+			socket?.off('GetAllChannelFromServer')
+			socket?.off('sendToChat')
+			socket?.disconnect()
+		}
 	}, [])
 
 	const SubmitItemHandler = ({ name, type, id, item }) => {
+		console.log(socket)
+		console.log(type, '\n', id, '\n', item)
 		if (type === 'text') socket.emit('sendToChat', { id: id, text: item })
 	}
 
