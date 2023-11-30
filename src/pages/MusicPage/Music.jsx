@@ -8,7 +8,6 @@ import io from 'socket.io-client'
 import { usePlaylist } from '@hook/usePlaylist'
 import config from '@config/config'
 import Loader from '@component/Loader/Loader'
-import MusicServerAPI from '../../API/MusicServerAPI'
 const socket = io(config.serverSocketUrl)
 function Music() {
 	const location = useLocation()
@@ -16,22 +15,24 @@ function Music() {
 
 	const idServer = location.state.idServer || undefined
 	const idUser = location.state.idUser || undefined
-	const [
-		playedStatus,
-		playlist,
-		currentPlayed,
-		play,
-		remove,
-		next,
-		prev,
-		changePlayeStatus,
-	] = usePlaylist(socket, idServer, idUser, setLoading)
+	const [playedStatus, playlist, currentPlayed] = usePlaylist(
+		socket,
+		idServer,
+		idUser,
+		setLoading
+	)
 
-
+	const play = item => {
+		setLoading(true)
+		socket?.emit('setPlayItem', { id: idServer, item: item })
+	}
+	const remove = item => {
+		setLoading(true)
+		socket?.emit('deltetePlayItem', { id: idServer, item: item })
+	}
 	const handlerImport = obj => {
 		socket?.emit('importedPlaylist', { id: idServer, obj: obj })
 	}
-
 	const finded = playlist.find(x => x.id === currentPlayed)
 	const text = finded === undefined ? '' : finded.title
 
@@ -51,9 +52,7 @@ function Music() {
 					playedStatus={playedStatus}
 					id={idServer}
 					text={text}
-					next={next}
-					prev={prev}
-					changePlayeStatus={changePlayeStatus}
+					socket={socket}
 				/>
 			</div>
 			{playlist.length === 0 ? (
