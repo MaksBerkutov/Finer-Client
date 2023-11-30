@@ -41,3 +41,10 @@ button {
 button:hover {
   background-color: #7289DA;
 }
+
+@media (max-width: 767px) {
+
+  .container {
+    flex-direction: column;
+  }
+}

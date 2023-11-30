@@ -26,3 +26,12 @@
 .item:hover {
   background-color: #ff5757;
 }
+
+
+@media (max-width: 767px) {
+
+  .userItem {
+    width: 20rem;
+
+  }
+}
