@@ -10,12 +10,10 @@ export const useAuntification = () => {
 	const authenticateUser = userData => {
 		localStorage.setItem('userData', JSON.stringify(userData))
 	}
-
+	
 	useEffect(() => {
 		const locationState = location.state
 		const storedUserData = getUserData()
-		console.log(locationState)
-		console.log(storedUserData)
 		if (locationState !== null && locationState?.User) {
 			setListServers(locationState.Servers || [])
 			setUser(locationState.User || undefined)
@@ -23,11 +21,9 @@ export const useAuntification = () => {
 				User: locationState.User,
 				Servers: locationState.Servers,
 			})
-			console.log(User)
 		} else if (storedUserData !== null) {
 			setListServers(storedUserData.Servers)
 			setUser(storedUserData.User)
-			console.log(User)
 		} else {
 			navigate('/')
 		}

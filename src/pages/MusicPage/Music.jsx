@@ -8,6 +8,7 @@ import io from 'socket.io-client'
 import { usePlaylist } from '@hook/usePlaylist'
 import config from '@config/config'
 import Loader from '@component/Loader/Loader'
+
 const socket = io(config.serverSocketUrl)
 function Music() {
 	const location = useLocation()

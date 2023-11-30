@@ -6,6 +6,7 @@ import logo from '@image/logo.png'
 import Menu from '@component/Menu/Menu'
 import { useAuntification } from '@hook/useAuntification'
 import MenuCenter from './ItemMenuCenter.js'
+import { unAuntification } from '@util/Auntification.js'
 
 const MainPage = () => {
 	const [selectedId, setId] = useState(-1)
@@ -29,7 +30,7 @@ const MainPage = () => {
 			to: '/',
 			callback: e => {
 				e.preventDefault()
-				localStorage.removeItem('userData')
+				unAuntification()
 				navigate('/')
 			},
 		},

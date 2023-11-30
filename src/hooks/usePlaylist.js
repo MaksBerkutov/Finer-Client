@@ -8,6 +8,8 @@ export const usePlaylist = (socket, idServer, idUser, setLoading) => {
 	const navigate = useNavigate()
 	useEffect(() => {
 		setLoading(true)
+		socket?.connect()
+		console.log('Mount')
 		const fetchData = async () => {
 			try {
 				if (idServer === -1) {
@@ -18,50 +20,62 @@ export const usePlaylist = (socket, idServer, idUser, setLoading) => {
 						},
 					})
 				}
-				socket?.connect()
 
-				socket.emit(
+				console.log('connectMe', socket)
+
+				socket?.emit(
 					'connectMe',
 					{ idServer: idServer, idUser: idUser },
 					callback => {
-						if (true) socket?.emit('getAllInfo', { id: idServer })
+						console.log(callback)
+						if (callback) {
+							socket?.emit('getAllInfo', { id: idServer })
+						} else
+							navigate('/error', {
+								state: {
+									title: 'Ошибка',
+									body: 'Вы уже подключенны.',
+								},
+							})
 					}
 				)
-
 				socket?.on('updatePlayed', status => {
 					setStatus(status)
 				})
+				socket?.on('remove', ({ deleteId }) => {
+					if (deleteId === -1) return
+					const remove = songs => {
+						const updatedSongs = [...songs]
 
-				socket?.on('updatePlaylist', ({ action, song }) => {
+						if (deleteId !== -1) {
+							updatedSongs.splice(deleteId, 1)
+						}
+
+						return updatedSongs
+					}
+					setPlaylist(prevInfo => remove(prevInfo))
+					setLoading(false)
+				})
+				socket?.on('newCurrentPlayed', ({ newId }) => {
+					setCurrentPlayed(newId)
+					setLoading(false)
+				})
+				socket?.on('add', ({ song }) => {
+					setPlaylist(prevInfo => [...prevInfo, song])
+					setLoading(false)
+				})
+
+				socket?.on('updatePlaylist', ({ song }) => {
 					if (song === undefined) return
 
-					if (action === 'allItems') {
-						socket?.emit('getCurrentStatus', { id: idServer }, callback => {
-							setStatus(callback)
-						})
-						setPlaylist(song)
-
-						socket?.emit('getCurrentPlayed', { id: idServer }, callback => {
-							setCurrentPlayed(callback)
-						})
-					} else if (action === 'newCurrentPlayed') {
-						setCurrentPlayed(song)
-					} else if (action === 'add') {
-						setPlaylist(prevInfo => [...prevInfo, song])
+					setPlaylist(song)
+					socket?.emit('getCurrentStatus', { id: idServer }, callback => {
+						setStatus(callback)
+					})
+					socket?.emit('getCurrentPlayed', { id: idServer }, callback => {
+						setCurrentPlayed(callback)
 						setLoading(false)
-					} else if (action === 'remove') {
-						const remove = songs => {
-							const updatedSongs = [...songs]
-
-							if (song !== -1) {
-								updatedSongs.splice(song, 1)
-							}
-
-							return updatedSongs
-						}
-						setPlaylist(prevInfo => remove(prevInfo))
-						setLoading(false)
-					}
+					})
 				})
 			} catch (error) {
 				console.log('Error fetching data:', error)
@@ -69,10 +83,15 @@ export const usePlaylist = (socket, idServer, idUser, setLoading) => {
 		}
 
 		fetchData()
-		setLoading(false)
+
 		return () => {
+			console.log('unMount')
+
 			socket?.off('updatePlaylist')
 			socket?.off('updatePlayed')
+			socket?.off('remove')
+			socket?.off('newCurrentPlayed')
+			socket?.off('add')
 			socket?.disconnect()
 		}
 	}, [])

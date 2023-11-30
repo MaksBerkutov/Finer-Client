@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Nav } from 'react-bootstrap'
 import MenuItem from './MenuItem/MenuItem'
+import { getIdServer, saveIdServer } from '@util/Auntification.js'
 
 const Menu = ({ items, onItemClick }) => {
 	const [selectedItem, setSelectedItem] = useState(null)
@@ -9,8 +10,13 @@ const Menu = ({ items, onItemClick }) => {
 	const handleItemClick = item => {
 		setSelectedItem(item)
 		onItemClick(item)
+		saveIdServer(item)
 	}
 
+	useEffect(() => {
+		const savedItem = getIdServer()
+		savedItem !== undefined && handleItemClick(savedItem)
+	}, [])
 	return (
 		<Nav
 			className='justify-content-center  '
