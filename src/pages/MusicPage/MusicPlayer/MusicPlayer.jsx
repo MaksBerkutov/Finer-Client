@@ -1,14 +1,18 @@
 import React from 'react'
 import classes from './MusicPlayer.module.css'
 
-const MusicPlayer = ({
-	text,
-	id,
-	playedStatus,
-	next,
-	prev,
-	changePlayeStatus,
-}) => {
+const MusicPlayer = ({ socket, text, id, playedStatus }) => {
+
+	const changePlayedStatuc = () => {
+		socket.emit('changeMusicStatus', { id: id, newStatus: !playedStatus })
+	}
+	const goNextSongs = () => {
+		socket.emit('goNextSongs', id)
+	}
+	const goPrevSongs = () => {
+		socket.emit('goPrevSongs', id)
+	}
+
 	return (
 		<div className={classes.player}>
 			{text === '' ? (
@@ -18,11 +22,11 @@ const MusicPlayer = ({
 			)}
 
 			<div className={classes.controls}>
-				<button onClick={() => prev()}>Previous</button>
-				<button onClick={() => changePlayeStatus()}>
+				<button onClick={() => goPrevSongs()}>Previous</button>
+				<button onClick={() => changePlayedStatuc()}>
 					{playedStatus ? 'Pause' : 'Resume'}
 				</button>
-				<button onClick={() => next()}>Next</button>
+				<button onClick={() => goNextSongs()}>Next</button>
 			</div>
 		</div>
 	)
