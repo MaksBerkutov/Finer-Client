@@ -8,6 +8,7 @@ const Menu = ({ items, onItemClick }) => {
 	const [selectedItem, setSelectedItem] = useState(null)
 
 	const handleItemClick = item => {
+		if (item === selectedItem) item = null
 		setSelectedItem(item)
 		onItemClick(item)
 		saveIdServer(item)

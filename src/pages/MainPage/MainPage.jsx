@@ -14,7 +14,8 @@ const MainPage = () => {
 	const [ListServers, User] = useAuntification()
 
 	const handleItemClick = selectedItem => {
-		setId(selectedItem.id)
+		if (selectedItem !== null) setId(selectedItem.id)
+		else setId(-1)
 	}
 
 	const ItemMenuCenter = MenuCenter(ListServers, User, selectedId)

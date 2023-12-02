@@ -39,3 +39,13 @@ body {
 	transform: translateX(-350px);
 	transition: all 500ms ease-in;
 }
+
+.footer {
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	background-color: indigo;
+	color: white;
+}

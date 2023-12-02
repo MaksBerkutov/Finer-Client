@@ -6,14 +6,16 @@ const ErrorPage = () => {
 	const navigate = useNavigate()
 	const [ErrorTitle, ErrorBody] = useError()
 	return (
-		<div class='container mt-5'>
-			<div class={classes.errorPanel}>
-				<div class={classes.errorHeader}>
+		<div className='container d-flex align-items-center justify-content-center'>
+			<div className={` ${classes.errorPanel}`} style={{ maxWidth: '400px' }}>
+				<div className={classes.errorHeader}>
 					<h4>{ErrorTitle}</h4>
 				</div>
-				<div class={classes.errorBody}>
+				<div className={classes.errorBody}>
 					<p>{ErrorBody}</p>
-					<button onClick={() => navigate('/')}>Oke</button>
+					<button className='btn btn-primary' onClick={() => navigate('/')}>
+						Хорошо
+					</button>
 				</div>
 			</div>
 		</div>

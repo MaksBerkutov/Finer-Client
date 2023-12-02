@@ -16,13 +16,19 @@ export const usePlaylist = (socket, idServer, idUser, setLoading) => {
 					navigate('/error', {
 						state: {
 							title: 'Ошибка',
-							body: 'Вы скорее не выбрали сервер по которому хотите получить информацию пожалуйста выберите интересующий вас сервер.',
+							body: 'Вы скорее не выбрали сервер по которому хотите получить информацию пожалуйста выберите сервер.',
 						},
 					})
 				}
 
-				console.log('connectMe', socket)
-
+				socket.on('connect_error', error => {
+					navigate('/error', {
+						state: {
+							title: 'Ошибка 404 Not Found',
+							body: 'Сервер не доступен =) Cкорее всего сейчас происходит обновление. Этот процесс может занять до нескольких часов)',
+						},
+					})
+				})
 				socket?.emit(
 					'connectMe',
 					{ idServer: idServer, idUser: idUser },
