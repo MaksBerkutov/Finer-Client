@@ -1,5 +1,5 @@
 # Finer Discord Bot Web GUI
-Добро пожаловать в Discord Bot Web GUI! Этот проект предоставляет удобный интерфейс для управления и взаимодействия с вашим Discord-ботом с помощью React.
+Добро пожаловать в [Finer](https://github.com/MaksBerkutov/Finer-Servers) Web GUI! Этот проект предоставляет удобный интерфейс для управления и взаимодействия с вашим Finer-ботом с помощью React.
 ## Содержание
 - [Finer Discord Bot Web GUI](#finer-discord-bot-web-gui)
   - [Содержание](#содержание)
@@ -18,16 +18,18 @@
 - **Развертывание:** Vercel (или ваш предпочтительный хостинг)
 ## Установка
 Чтобы настроить проект локально, выполните следующие шаги:
-1. **Клонируйте репозиторий:**
+1. **Утсновите Finer Server**
+   - [Finer Server Repo](https://github.com/MaksBerkutov/Finer-Servers)
+2. **Клонируйте репозиторий:**
    ```bash
    git clone https://github.com/MaksBerkutov/Finer-Client.git
    cd Finer-Client
    ```
-2. **Установите зависимости:**
+3. **Установите зависимости:**
    ```bash
    npm install
    ```
-3. **Настройте переменные окружения:**
+4. **Настройте переменные окружения:**
    Настройте файл `.env`,  в корневом каталоге и добавьте ваши настройки конфигурации:
    ```
    SERVER_URL=EXPRESS_SERVER_URL_http://192.168.1.200:3003
@@ -35,7 +37,7 @@
    CLIENT_URL=HOST_URL_http://localhost:3000
    DISCORD_CLIENT_ID=DISCORD_CLIENT_ID
    ```
-4. **Запустите приложение:**
+5. **Запустите приложение:**
    ```bash
    npm start
    ```
